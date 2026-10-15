@@ -1,0 +1,22 @@
+{
+  "name": "personal-skills",
+  "owner": {
+    "name": "jinnnyang",
+    "email": "CHANGE-ME@example.com"
+  },
+  "metadata": {
+    "description": "Personal skill collection built on the Agent Skills standard",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "core",
+      "description": "Core tooling: skill-creator meta-skill for creating, testing, benchmarking and optimizing other skills",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/skill-creator"
+      ]
+    }
+  ]
+}
