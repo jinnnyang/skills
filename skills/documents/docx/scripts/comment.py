@@ -125,7 +125,8 @@ def apply(unpacked: Path, text: str, author: str, find, paragraph: int, extended
     cid = existing_comment_id(unpacked)
     date = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    # markers around each target paragraph
+    # markers around each target paragraph. w:pPr must stay the first
+    # child of w:p (schema-enforced), so commentRangeStart goes after it.
     for par in targets:
         start = doc.createElementNS(W, "w:commentRangeStart")
         start.setAttribute("w:id", str(cid))
@@ -135,7 +136,12 @@ def apply(unpacked: Path, text: str, author: str, find, paragraph: int, extended
         ref_r = doc.createElementNS(W, "w:commentReference")
         ref_r.setAttribute("w:id", str(cid))
         ref.appendChild(ref_r)
-        par.insertBefore(start, par.firstChild)
+        ppr = par.getElementsByTagNameNS(W, "pPr")
+        if ppr and ppr[0].parentNode is par:
+            anchor = ppr[0].nextSibling
+            par.insertBefore(start, anchor) if anchor else par.appendChild(start)
+        else:
+            par.insertBefore(start, par.firstChild)
         par.appendChild(end)
         par.appendChild(ref)
 

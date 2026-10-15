@@ -1,6 +1,6 @@
 ---
 name: docx
-description: "create-edit-and-analyze-word-docx-dotx-files-merge-split-runs-accept-tracked-changes-and-add-comments-validate-against-ecma-376-schemas"
+description: "Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx or .dotx files): producing reports, memos, or letters with headings, tables, or page numbers; extracting or reorganizing document content; finding and replacing text (including across split runs); accepting or working with tracked changes (redlining); adding or reading comments; or validating document structure against the OOXML schemas. Trigger on any mention of 'Word doc', 'word document', '.docx', '.dotx', or a deliverable requested as a Word file. Do NOT use for PDFs, spreadsheets, or presentations."
 ---
 # DOCX: create, edit, analyze
 
