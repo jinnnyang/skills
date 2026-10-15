@@ -1,0 +1,15 @@
+# PPTX Skill
+
+Self-contained skill for creating, editing, and analyzing PowerPoint
+(.pptx/.potx) files.
+
+## License
+
+Original work (SKILL.md, Python scripts), released under the Apache
+License 2.0 together with the rest of this repository.
+
+`scripts/office/schemas/` contains verbatim copies of open standard
+specification documents — sources and the applicable notices are listed
+in `scripts/office/schemas/SCHEMAS-LICENSE.md` (Ecma International /
+W3C / Apache-2.0 docx4j). They are standard documents, not original
+code, and remain under their respective terms.

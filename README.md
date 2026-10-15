@@ -6,21 +6,27 @@
 
 ```
 skills/
-├── .claude-plugin/marketplace.json  # Claude Code 插件市场注册表（技能分发入口）
+├── .claude-plugin/marketplace.json  # Claude Code 插件市场注册表（由 scripts/gen_marketplace.py 生成）
 ├── skills/
-│   └── skill-creator/               # 元技能：创建/测试/评估/优化其他技能（含完整 CI/CD 式评估管线）
+│   ├── documents/
+│   │   └── pptx/                    # PPTX 创建/编辑/分析（自研实现，schema 为 ECMA-376 官方文件）
+│   └── meta/
+│       └── skill-creator/           # 元技能：创建/测试/评估/优化其他技能（源自 anthropics/skills, Apache-2.0）
 ├── spec/
 │   └── agent-skills-spec.md         # 规范指针（正文见 agentskills.io/specification）
 ├── template/
 │   └── SKILL.md                     # 新建技能的最小模板
+├── scripts/
+│   └── gen_marketplace.py           # 扫描 skills/ 生成 marketplace.json 注册表
 ├── README.md
 └── .gitignore
 ```
 
 ## 当前状态
 
-- **骨架阶段**：仅含 `skill-creator` 元技能（含 agents/、scripts/、eval-viewer/、references/、assets/ 全管线）。
-- 自有技能将陆续迁入（原 more-skills 中的技能计划迁移至此）。
+- `meta/skill-creator`：源自 anthropics/skills（Apache-2.0），含 agents/、scripts/、eval-viewer/ 全管线。
+- `documents/pptx`：自研 PPTX 技能（SKILL.md、脚本、校验器均为原创；XSD 来自 ECMA-376/W3C 官方发布，许可见其 SCHEMAS-LICENSE.md）。
+- docx/pdf/xlsx 的 anthropic 原版技能为 source-available、不可再分发，存于本地参考目录（仓库外），后续按需自研替代。
 
 ## 添加一个新技能
 
@@ -47,12 +53,13 @@ python skills/skill-creator/scripts/quick_validate.py skills/skill-creator
 
 ## 来源与许可
 
-- `skill-creator` 源自 [anthropics/skills](https://github.com/anthropics/skills)（Apache-2.0），`LICENSE.txt` 随目录保留。
-- 仓库未包含 anthropics 的 `document-skills`（docx/pdf/pptx/xlsx）：其为 source-available 许可、不可再分发，仅可自行参考其设计思路实现。
-- 其余第三方依赖与声明见各技能目录内 LICENSE / THIRD_PARTY_NOTICES。
+- `meta/skill-creator` 源自 [anthropics/skills](https://github.com/anthropics/skills)（Apache-2.0），`LICENSE.txt` 随目录保留。
+- `documents/pptx` 为自研实现：SKILL.md 与脚本均为原创；`scripts/office/schemas/` 下的 XSD 是 ECMA-376（Ecma International，版权政策允许带声明分发）与 W3C 的官方标准文件，来源与声明见该目录 `SCHEMAS-LICENSE.md`。
+- anthropics 的 `document-skills`（docx/pdf/pptx 原版、xlsx）：source-available、不可再分发，不随仓库分发；本地参考副本存于仓库外，仅作设计参考。
 
 ## 待办
 
 - [x] marketplace.json 的 `name` / `owner` / `email` 已替换为实际标识（2026-10-15：email=jinnnyang@139.com）
-- [ ] 迁移自有技能（从 more-skills 挑选）
-- [ ] 技能迁移后按分组扩充插件定义
+- [x] 迁移自有技能（更名重组：skill-creator → meta/，自研 pptx 落地 documents/）
+- [ ] docx/xlsx 按需自研替代（原版留在仓库外参考目录）
+- [ ] 按分组扩充插件定义
