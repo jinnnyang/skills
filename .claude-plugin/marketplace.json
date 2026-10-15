@@ -2,7 +2,7 @@
   "name": "personal-skills",
   "owner": {
     "name": "jinnnyang",
-    "email": "CHANGE-ME@example.com"
+    "email": "jinnnyang@139.com"
   },
   "metadata": {
     "description": "Personal skill collection built on the Agent Skills standard",
@@ -15,7 +15,7 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/skill-creator"
+        "skills/skill-creator"
       ]
     }
   ]

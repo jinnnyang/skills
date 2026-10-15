@@ -77,25 +77,39 @@ flowchart TD
 
 ### 5.2 分类规则
 
-- 按**稳定领域**分类（示例：document / development / communication / meta），**不按状态**分类（in-progress / deprecated 等会频繁搬动）。
+- 按**稳定领域**分类（定案 slug 见 5.3：documents / writing / design / engineering / meta），**不按状态**分类（in-progress / deprecated 等会频繁搬动）。
 - 二级目录（sub-category）非必须；单技能分类只挂一级。
 - 目录分类是"组织维度"，marketplace plugin 分组是"分发维度"——以目录分类为主，plugin 分组保持精简（暂时只保留 `core`），避免同一份技能在两边重复登记。
 
-### 5.3 配套：自动生成 marketplace.json 的脚本
+### 5.3 分类定案（2026-10-15）
+
+对 anthropics/skills 全部 19 个技能归类后确定五个一级分类：
+
+| slug | 覆盖范围 | anthropics 示例 |
+|---|---|---|
+| `documents` | Office/PDF 等文件格式处理 | docx, pdf, pptx, xlsx（source-available，不可迁移，仅参考） |
+| `writing` | 文档写作、通讯、协作 | doc-coauthoring, internal-comms |
+| `design` | 前端、视觉、主题、生成艺术 | frontend-design, web-artifacts-builder, canvas-design, theme-factory, algorithmic-art, brand-guidelines |
+| `engineering` | 测试、构建、API 工程 | webapp-testing, mcp-builder, claude-api |
+| `meta` | 元技能（技能的技能） | skill-creator |
+
+不设 Claude 产品向分类（academy-guide / discernment-nudge / slack-gif-creator 不迁移）。目录分类名与 plugin 分组名共用同一套 slug。
+
+### 5.4 配套：自动生成 marketplace.json 的脚本
 
 分类后手工维护注册表易错且重复。新增一个纯 Python 脚本（如 `scripts/gen_marketplace.py`）：扫描 `skills/` 下所有含 `SKILL.md` 的目录，自动生成 `.claude-plugin/marketplace.json` 的 `skills[]` 路径清单。之后加技能、调分类、改名均零成本，注册表不遗漏。
 
-### 5.4 已知副作用
+### 5.5 已知副作用
 
-`skill-creator` 把评估工作区放在技能目录的 sibling（`<skill-name>-workspace/`）。技能在深层路径时，工作区会嵌进分类树（如 `skills/document/word/docx-workspace/`）。可接受，需知悉。
+`skill-creator` 把评估工作区放在技能目录的 sibling（`<skill-name>-workspace/`）。技能在深层路径时，工作区会嵌进分类树（如 `skills/documents/docx-workspace/`）。可接受，需知悉。
 
-### 5.5 结构示意
+### 5.6 结构示意
 
 ```mermaid
 flowchart LR
     Root["skills/"] --> Meta["meta/"]
-    Root --> Doc["document/"]
-    Root --> Dev["development/"]
+    Root --> Doc["documents/"]
+    Root --> Dev["engineering/"]
     Meta --> Sc["skill-creator"]
     Doc --> Dx["docx（未来迁移）"]
     Dev --> Wt["webapp-testing（未来迁移）"]

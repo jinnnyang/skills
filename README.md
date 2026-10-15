@@ -40,6 +40,7 @@ skills/
 ## 快速校验
 
 ```bash
+# 依赖：PyYAML（python -m pip install pyyaml 或 uv pip install pyyaml）
 # 校验 skill-creator 结构是否合法（10 道验证门）
 python skills/skill-creator/scripts/quick_validate.py skills/skill-creator
 ```
@@ -52,6 +53,6 @@ python skills/skill-creator/scripts/quick_validate.py skills/skill-creator
 
 ## 待办
 
-- [ ] marketplace.json 的 `name` / `owner` / `email` 替换为实际标识（注册 Claude Code 市场前必须改）
+- [x] marketplace.json 的 `name` / `owner` / `email` 已替换为实际标识（2026-10-15：email=jinnnyang@139.com）
 - [ ] 迁移自有技能（从 more-skills 挑选）
 - [ ] 技能迁移后按分组扩充插件定义
