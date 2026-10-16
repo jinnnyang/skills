@@ -91,7 +91,7 @@ flowchart TD
 | `writing` | 文档写作、通讯、协作 | doc-coauthoring, internal-comms |
 | `design` | 前端、视觉、主题、生成艺术 | frontend-design, web-artifacts-builder, canvas-design, theme-factory, algorithmic-art, brand-guidelines |
 | `engineering` | 测试、构建、API 工程 | webapp-testing, mcp-builder, claude-api |
-| `meta` | 元技能（技能的技能） | skill-creator |
+| `meta` | 元技能：作用于 Agent 自身能力的技能（创建技能、委派任务、评估技能等） | skill-creator；自研新增：prime-agent（子代理委派） |
 
 不设 Claude 产品向分类（academy-guide / discernment-nudge / slack-gif-creator 不迁移）。目录分类名与 plugin 分组名共用同一套 slug。
 

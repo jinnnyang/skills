@@ -17,6 +17,7 @@
       "skills": [
         "skills/documents/docx",
         "skills/documents/pptx",
+        "skills/meta/prime-agent",
         "skills/meta/skill-creator"
       ]
     }
