@@ -20,6 +20,9 @@ Each has a known fix; the wrapper script bakes in the mechanical ones.
 
 | Situation | Do |
 |---|---|
+| Hermes prime-delegate plugin installed (prime_spawn in tool catalog) | Use `prime_spawn` directly — no wrapper script needed; it handles cwd/timeout/notification. Default timeout_s=600 is the WHOLE-task wall clock and there is no cancel: pass timeout_s:900 for anything non-trivial. prime_spawn is the primary route even when delegate.sh is missing from the skills dir.
+| User says '让prime修改/委托prime, 你负责验收' | prime does the edit; you NEVER apply it yourself. Review flow: prime_status(full_output) → git diff to eyeball hunks → syntax check / small runtime probe to verify the actual claim (e.g. simulate the failure path) → report. Trust the diff, not prime's self-report. Pass large tasks an explicit `timeout_s` (default 600 is a wall-clock kill with no cancel). |
+| `scripts/delegate.sh` missing from this skill's directory | Don't hunt for it: fall back to `prime_spawn`. |
 | Delegate a self-contained task | One-shot delegate (below) |
 | Task needs build/test gates | One-shot with `--autonomous` |
 | `No models available` / silent exit / provider missing | `references/known_issues.md` (ISSUE-001/003) |

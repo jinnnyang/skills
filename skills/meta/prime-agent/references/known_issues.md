@@ -36,6 +36,19 @@ rescue it — bootstrap exits before provider resolution.
 provider object (user types the key; never through the agent), re-run
 diagnose.
 
+## ISSUE-005 — Testing self-updating plugin code requires care
+
+When verifying a self-update plugin that replaces its own installed copy:
+- Force a trigger with the plugin's TTL env var set to `0` (e.g.
+  `OMNIROUTE_SELF_UPDATE_TTL=0`) instead of waiting out the TTL or deleting
+  the stamp file.
+- Give a local repo as the update URL in **Windows form** (`C:/Users/x/repo`),
+  never the MSYS form (`/c/Users/x/repo`) — the plugin shells out to native
+  git.exe, which rejects MSYS paths and clone fails with exit 128.
+- Verify the update actually landed by checking the installed copy (the
+  patched lines should now appear there), and clean any leftover empty
+  `omniroute-selfupdate-*` staging dirs under the hermes home.
+
 ## ISSUE-002 — External timeout kills the report, not the work
 
 **Status**: Observed under supervisor kills (Hermes terminal timeout).
