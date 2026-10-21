@@ -1,12 +1,19 @@
 ---
 name: prime-agent
-description: Delegate self-contained coding tasks to prime-agent (PrimeIntellect coding agent) via its headless one-shot CLI. Use when the user asks to delegate/委托 a coding task, spawn a background coding agent, run autonomous implementation work, or mentions prime-agent, "HEADLESS_OK", "No models available", silent exit after "✓ ready", aptapi/AptAPI provider issues, "--print 静默退出", or "prime_spawn". Also use when a prime-agent headless run fails silently, hangs after producing output, or its self-reported results need verification.
+description: Delegate self-contained coding tasks to prime-agent (PrimeIntellect coding agent) via its headless one-shot CLI. Use when the user asks to delegate/委托 a coding task, spawn a background coding agent, run autonomous implementation work, or mentions prime-agent, "HEADLESS_OK", "No models available", silent exit after "✓ ready", aptapi/AptAPI provider issues, "--print 静默退出", or "prime_spawn". Also use when a prime-agent headless run fails silently, hangs after producing output, or its self-reported results need verification. Also use when the question is how to isolate prime-agent state — separate memory / skills / MCP servers per project or role, or which config file and directory a skill or server comes from.
 ---
 
 # prime-agent delegation
 
 Wrap the prime-agent CLI so delegation succeeds on the first try and its
 reports are trusted only after verification.
+
+Isolation of memory / skills / MCP servers per role: see
+`references/isolation-and-resources.md`. Two rules worth knowing before you
+open it — copy `auth.json` into each profile, never symlink it (auth writes
+rename onto the path and eat the link); and prove a partition with
+`prime-agent prompt` grep probes plus a cross-profile `rlm.get_harness_state()`
+check rather than trusting the directory layout.
 
 ## Why this is finicky
 
@@ -15,6 +22,17 @@ four places: provider plumbing that fails with misleading errors, terminal
 pipe semantics that make success look like failure, a report-only-at-end
 design that gives zero progress signal, and LLM-report drift on long runs.
 Each has a known fix; the wrapper script bakes in the mechanical ones.
+
+## Role / workspace isolation
+
+No `profile`/`workspace`/`role` flag exists. Memory, harness skills, sessions and
+the daemon socket follow `PRIME_AGENT_CODING_AGENT_DIR`; project skills and project
+settings follow `--cwd`; MCP servers follow `settings.json` (global + project,
+deep-merged). Verify any partition with `prime-agent prompt`, never
+`prime-agent config` (interactive TUI, never returns in a non-tty shell).
+
+Layout, discovery order, `!`/`+`/`-` skill filters, MCP merge semantics, and the
+Windows `HOME` path trap: `references/isolation-and-resources.md`.
 
 ## Routing
 
@@ -92,8 +110,13 @@ runs it demonstrably drifts (ISSUE-006):
 
 Check in order: exe present (`~/.local/share/prime-agent/prime-agent.exe`),
 `models.json` valid with `apiKey` inside each provider object (ISSUE-001),
-liveness `delegate.sh "Reply with exactly: HEADLESS_OK"`. Config repairs
-touch `~/.prime/agent/` only with user consent and a backup.
+liveness `delegate.sh "Reply with exactly: HEADLESS_OK"` — run it via the
+  terminal tool's background mode (or a foreground timeout ≥300s): even the
+  trivial probe takes 2+ minutes wall clock under `--print`, so a 90–120s
+  kill is NOT evidence of breakage; judge only by captured output, and keep
+  the agent-side tool timeout ABOVE the wrapper's `-t` (the outer timeout
+  fires first and throws away a healthy run).
+Config repairs touch `~/.prime/agent/` only with user consent and a backup.
 
 ## Refuses
 
