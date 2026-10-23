@@ -328,6 +328,19 @@ Automatically falls back to the specified model when the default is overloaded (
 | `--teammate-mode <mode>` | How agent teams display: `auto`, `in-process`, or `tmux` |
 | `--brief` | Enable `SendUserMessage` tool for agent-to-user communication |
 
+### Background Mode (`--bg`)
+
+Launch a task as a background agent that returns immediately and keeps running:
+
+```bash
+claude --bg --name "Fix login bug" "handoff summary or task prompt"
+```
+
+- `--name` is effectively required (descriptive name): it is the display name in the job list, session picker, and terminal title.
+- The prompt should be a self-contained handoff summary: what was done, current state, next steps, which skills/docs to load. Reference existing artifacts (specs, ADRs, diffs) by path instead of duplicating them; redact secrets.
+- The agent starts in the current working directory. User manages jobs with `claude agents` (list/status).
+- Merge this with the handoff workflow: Hermes compacts the conversation into a summary, then seeds it here — same pattern as `subagents/handoff` but skipping the file.
+
 ### Tool Name Syntax for --allowedTools / --disallowedTools
 ```
 Read                    # All file reading

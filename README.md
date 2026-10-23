@@ -15,8 +15,7 @@ skills/
 │   │   └── ...                      # GitHub 工作流（gh CLI / git）
 │   ├── subagents/
 │   │   ├── ...                      # 外部编码智能体委托（Codex/Claude Code/OpenCode/prime-agent）
-│   │   ├── handoff/                 # 跨代理/跨 session handoff 文档导出（vendor 自 mattpocock/skills）
-│   │   └── claude-handoff/          # handoff 的 Claude Code 后台代理变体（vendor 自 mattpocock/skills）
+│   │   └── handoff/                 # 跨代理/跨 session handoff 文档导出（vendor 自 mattpocock/skills；后台变体并入 claude-code 技能）
 │   ├── terminal/
 │   │   ├── term-cli/                # 交互式终端会话控制（vendor 自 EliasOenal/term-cli, BSD-3-Clause-Clear）
 │   │   └── powershell-safe-invocation/  # PowerShell 安全调用规范（vendor 自 Misaka-Mikoto-Tech, MIT）
@@ -39,7 +38,7 @@ skills/
 - `documents/pptx`：自研 PPTX 技能（SKILL.md、脚本、校验器均为原创；XSD 来自 ECMA-376/W3C 官方发布，许可见其 SCHEMAS-LICENSE.md）。
 - `terminal/term-cli`：vendor 自 [EliasOenal/term-cli](https://github.com/EliasOenal/term-cli)（BSD-3-Clause-Clear），仅拷贝 SKILL.md + term-cli/term-assist 脚本 + LICENSE + install.sh；硬依赖 tmux，Windows 需 WSL/MSYS。见其 README.md。
 - `terminal/powershell-safe-invocation`：vendor 自 [Misaka-Mikoto-Tech/agent-skills](https://github.com/Misaka-Mikoto-Tech/agent-skills)（MIT），SKILL.md + reference.md 原样拷贝。
-- `engineering/*`（13 个）+ `subagents/handoff` + `subagents/claude-handoff` + `meta/writing-for-agents`：vendor 自 [mattpocock/skills](https://github.com/mattpocock/skills) v1.3.1（MIT）。分类调整：原 productivity/engineering/in-progress 三桶按本仓库语义收进 engineering/（工作流）、subagents/（跨代理接力）、meta/（元技能）。每个技能剔除 `agents/openai.yaml`，LICENSE 随目录保留，详见各自 README.md。
+- `engineering/*`（13 个）+ `subagents/handoff` + `meta/writing-for-agents`：vendor 自 [mattpocock/skills](https://github.com/mattpocock/skills) v1.3.1（MIT）。分类调整：原 productivity/engineering/in-progress 三桶按本仓库语义收进 engineering/（工作流）、subagents/（跨代理接力）、meta/（元技能）。每个技能剔除 `agents/openai.yaml`，LICENSE 随目录保留，详见各自 README.md。
 - 未收编（对委派工作流价值低）：implement、implement-spec、tdd、ask-matt、teach、wizard、wait-what、writing-beats/fragments/shape、pr、research、improve-codebase-architecture、setup-matt-pocock-skills。
 - docx/pdf/xlsx 的 anthropic 原版技能为 source-available、不可再分发，存于本地参考目录（仓库外），后续按需自研替代。
 

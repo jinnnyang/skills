@@ -41,7 +41,6 @@
         "skills/meta/skill-creator",
         "skills/meta/writing-for-agents",
         "skills/subagents/claude-code",
-        "skills/subagents/claude-handoff",
         "skills/subagents/codex",
         "skills/subagents/handoff",
         "skills/subagents/hermes-agent",

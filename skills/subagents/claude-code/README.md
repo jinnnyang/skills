@@ -8,6 +8,7 @@ Delegate coding to Claude Code CLI: features, PRs, code review workflows.
 | Upstream | `%LOCALAPPDATA%/hermes/hermes-agent/skills/autonomous-ai-agents/claude-code` |
 | Author / License | Hermes Agent + Teknium / MIT |
 | Local modifications | Frontmatter only: `version`/`author`/`platforms` moved under `metadata:` for agentskills.io spec compliance (quick_validate). Content otherwise identical |
+| | 2026-10-23: added `Background Mode (--bg)` section, merged from mattpocock/skills `claude-handoff` (that standalone skill deleted as redundant) |
 
 ## Sync notes
 

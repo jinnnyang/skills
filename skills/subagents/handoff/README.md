@@ -4,7 +4,7 @@
 
 ## 在本仓库的角色
 
-跨代理/跨 session 的胶水：Hermes ↔ Codex/Claude Code 之间导出可移植状态。`claude-handoff` 是它的「直接拉起后台代理」变体。
+跨代理/跨 session 的胶水：Hermes ↔ Codex/Claude Code 之间导出可移植状态。落盘版；「不落盘直接拉起 Claude Code 后台代理」的变体已并入 `skills/subagents/claude-code` 的 Background Mode（--bg）节。
 
 | Field | Value |
 |---|---|
