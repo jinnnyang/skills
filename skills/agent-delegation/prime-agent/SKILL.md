@@ -1,12 +1,31 @@
 ---
 name: prime-agent
-description: Delegate self-contained coding tasks to prime-agent (PrimeIntellect coding agent) via its headless one-shot CLI. Use when the user asks to delegate/委托 a coding task, spawn a background coding agent, run autonomous implementation work, or mentions prime-agent, "HEADLESS_OK", "No models available", silent exit after "✓ ready", aptapi/AptAPI provider issues, "--print 静默退出", or "prime_spawn". Also use when a prime-agent headless run fails silently, hangs after producing output, or its self-reported results need verification. Also use when the question is how to isolate prime-agent state — separate memory / skills / MCP servers per project or role, or which config file and directory a skill or server comes from.
+description: "Delegate tasks to prime-agent CLI (coding, MCP)."
+license: MIT
+metadata:
+  version: 2.3.0
+  author: Hermes Agent + Teknium
+  platforms: [linux, macos, windows]
+  hermes:
+    tags: [Coding-Agent, Prime-Intellect, Delegation, Verification, MCP, Profiles]
 ---
 
 # prime-agent delegation
 
 Wrap the prime-agent CLI so delegation succeeds on the first try and its
 reports are trusted only after verification.
+
+## When to Use
+
+- User asks to delegate/委托 a task to prime — coding first (implement, refactor, fix, run tests), but any self-contained task it can do in a terminal: research, file processing, long-running scripts.
+- Mentions prime-agent, prime_spawn, "HEADLESS_OK", "No models available", silent exit after "✓ ready", aptapi/AptAPI provider issues, "--print 静默退出".
+- A prime-agent headless run fails silently, hangs after producing output, or its self-reported results need verification.
+- How to install skills (markdown vs Python), what isolation they get, and how the continual-harness self-improvement (`rlm.harness` CRUD, `/refine`) differs from file skills: `references/skills.md`.
+- How to isolate prime-agent state — separate memory / skills / MCP servers per project or role; which config file/directory a skill or server comes from.
+- How to modify prime-agent's system prompt (APPEND_SYSTEM.md, --system-prompt, model-prompts.toml, prompt layers).
+- How to configure prime-agent MCP servers (add/list/get/remove, HTTP vs stdio, OAuth).
+
+**Don't use for:** delegating to Claude Code (`claude-code`), Codex (`codex`), or OpenCode (`opencode`) — sibling skills.
 
 Isolation of memory / skills / MCP servers per role: see
 `references/isolation-and-resources.md`. Two rules worth knowing before you
@@ -34,6 +53,42 @@ deep-merged). Verify any partition with `prime-agent prompt`, never
 Layout, discovery order, `!`/`+`/`-` skill filters, MCP merge semantics, and the
 Windows `HOME` path trap: `references/isolation-and-resources.md`.
 
+## MCP servers: add / list / get / remove
+
+CLI (writes `mcpServers` in the resolved agent-dir `settings.json` — set
+`PRIME_AGENT_CODING_AGENT_DIR` first for profiles):
+
+```bash
+prime-agent mcp list                  # list all
+prime-agent mcp get <name>            # show one
+prime-agent mcp add <name> --url <url> [--bearer-token-env-var <env>|--oauth] [--force]  # HTTP
+prime-agent mcp add <name> [--cwd <dir>] [--env CHILD=SOURCE] -- <command> [args...]     # stdio
+prime-agent mcp remove <name>         # delete
+```
+
+No `update` — change = remove + add (or hand-edit `settings.json`).
+stdio flags: `--cwd` = child working dir, `--env CHILD=SOURCE` = pass host env
+var SOURCE as CHILD. `--oauth` triggers browser OAuth on first use; in TUI
+`/mcp login` / `/mcp logout` run the client-side flow and persist to the shared
+auth store the daemon sessions read.
+
+Verify with `prime-agent prompt | grep 'Enabled generic MCP servers'` — the
+prompt only lists servers whose command/URL actually resolves. The
+`the mcpServers setting must be a JSON object` failure and rerun fix are in
+`references/isolation-and-resources.md`, along with global-vs-project merge
+semantics.
+
+## System prompt modification
+
+Five routes, least invasive first: `APPEND_SYSTEM.md` (global
+`~/.prime/agent/` or project `.prime/agent/`, appended to the dynamic tail) →
+CLI `--system-prompt` (replaces static layers) / `--append-system-prompt` →
+per-model `model-prompts.toml` in the agent dir → edit built-in layer files
+(compile-time, rebuild; parity-diff evidence required) → settings.json
+`prompts` array. Verify any change with `prime-agent prompt` (no tokens) —
+grep the plain output for content, `--json` segments are metadata-only.
+Details and file paths: `references/system-prompt.md`.
+
 ## Routing
 
 | Situation | Do |
@@ -47,6 +102,7 @@ Windows `HOME` path trap: `references/isolation-and-resources.md`.
 | Run hung after output / exit 124 | ISSUE-004 — output complete, exit unreliable |
 | Run timed out / killed | ISSUE-002 — disk work survives; re-dispatch a finishing task |
 | Suspicious "all tests pass" report | ISSUE-006 — run the Verification protocol |
+| Provider "Unknown" in session, or `spawn session worker ... rejected` after reinstall/uninstall | ISSUE-008 — stale process; kill it, clear leases |
 
 ## One-shot delegate
 
@@ -116,6 +172,10 @@ liveness `delegate.sh "Reply with exactly: HEADLESS_OK"` — run it via the
   kill is NOT evidence of breakage; judge only by captured output, and keep
   the agent-side tool timeout ABOVE the wrapper's `-t` (the outer timeout
   fires first and throws away a healthy run).
+Before uninstalling, upgrading, or rebuilding prime-agent, stop every
+running `prime-agent` process (`Get-Process prime-agent`) — deleting files
+leaves old daemons alive and they break the new binary (ISSUE-008).
+
 Config repairs touch `~/.prime/agent/` only with user consent and a backup.
 
 ## Refuses

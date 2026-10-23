@@ -17,11 +17,11 @@
       "skills": [
         "skills/documents/docx",
         "skills/documents/pptx",
-        "skills/meta/claude-code",
-        "skills/meta/codex",
+        "skills/agent-delegation/claude-code",
+        "skills/agent-delegation/codex",
+        "skills/agent-delegation/opencode",
+        "skills/agent-delegation/prime-agent",
         "skills/meta/hermes-agent",
-        "skills/meta/opencode",
-        "skills/meta/prime-agent",
         "skills/meta/skill-creator"
       ]
     }

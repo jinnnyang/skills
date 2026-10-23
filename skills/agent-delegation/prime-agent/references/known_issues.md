@@ -162,3 +162,34 @@ is the work itself appearing on disk.
 **Repair**: monitor by watching target paths — `git status`, file counts,
 new directories — on a coarse checkpoint schedule (5-10 min). Never poll
 the log; never re-dispatch because "the log is empty".
+
+## ISSUE-008 — Stale prime-agent process survives uninstall/reinstall
+
+**Status**: Observed 2026-10-22 on Windows after deleting the install dir and
+building a new exe from source. Deleting files does not stop a running process.
+
+**Symptom**:
+- Model list shows the provider (`prime-agent model list` OK), but a session
+  says `Unknown provider "bai"` (or `aptapi`).
+- Session list cannot open or delete old sessions. Creating one fails with
+  `the daemon rejected the create request: spawn session worker <id>`.
+- Logs under `~/.prime/agent/logs/` stop at the time the old process started;
+  the rejected create leaves no worker log.
+
+**Root cause**: an older daemon process keeps running from the deleted path
+(`~/.local/share/prime-agent/prime-agent.exe`). It holds its own provider
+state and the daemon socket / `session-leases/*.lock`. The new binary then
+collides with it.
+
+**Check** (PowerShell):
+- `Get-Process prime-agent | Select Id,StartTime,Path` — any Path outside the
+  current install is stale.
+- `ls ~/.prime/agent/session-leases` — leftover `*.lock` dirs with dead owners.
+
+**Repair** (needs user consent; process kill is destructive for running work):
+1. `taskkill /PID <id> /F` for every stale prime-agent process.
+2. Remove leftover `session-leases/*.lock`. Do not touch `auth.json`,
+   `models.json`, `settings.json`, or sessions.
+3. Re-run `prime-agent --provider <p> --model <m> -p "reply OK"`.
+
+**Prevention**: stop all prime-agent processes before uninstall or upgrade.

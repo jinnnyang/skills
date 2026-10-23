@@ -40,8 +40,30 @@ shift $((OPTIND - 1))
 [ $# -lt 1 ] && { echo "usage: delegate.sh [-t sec] [-n turns] [-m model] [-a] \"prompt\"" >&2; exit 2; }
 PROMPT="$1"
 
-EXE="$HOME/.local/share/prime-agent/prime-agent.exe"
+EXE="$HOME/.local/bin/prime-agent.exe"
 [ -f "$EXE" ] || { echo "delegate.sh: prime-agent.exe not found at $EXE" >&2; exit 2; }
+
+# ISSUE-008: a daemon left running from a deleted/older install breaks new
+# sessions (provider "Unknown", "spawn session worker ... rejected"). Refuse to
+# run while any prime-agent process lives outside the current exe's directory.
+# Report only; killing a process is the user's call.
+EXE_WIN=$(cygpath -w "$EXE" 2>/dev/null || echo "$EXE")
+EXE_DIR=$(dirname "$EXE_WIN" | tr '[:upper:]' '[:lower:]')
+STALE=$(powershell.exe -NoProfile -Command 'Get-Process prime-agent -ErrorAction SilentlyContinue | ForEach-Object { $_.Id.ToString() + " " + $_.Path }' 2>/dev/null | tr -d '\r')
+STALE_OUT=""
+while read -r pid path; do
+  [ -z "$pid" ] && continue
+  dir=$(dirname "$path" | tr '[:upper:]' '[:lower:]')
+  if [ "$dir" != "$EXE_DIR" ]; then
+    STALE_OUT+="  PID $pid  $path"$'\n'
+  fi
+done <<< "$STALE"
+if [ -n "$STALE_OUT" ]; then
+  echo "delegate.sh: stale prime-agent process(es) from another install (ISSUE-008):" >&2
+  printf '%s' "$STALE_OUT" >&2
+  echo "Stop them first: taskkill /PID <id> /F, then clear ~/.prime/agent/session-leases/*.lock if needed." >&2
+  exit 2
+fi
 
 # ISSUE-003: the exe needs a Windows-form agent dir, never the MSYS form
 AGENT_DIR_WIN=$(cygpath -w "$HOME/.prime/agent" 2>/dev/null || echo "$USERPROFILE\\.prime\\agent")
