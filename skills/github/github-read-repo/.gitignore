@@ -10,3 +10,9 @@ node_modules/
 # Editor / OS noise
 .DS_Store
 Thumbs.db
+
+# runtime pull logs / scratch readme downloads
+deepwiki-pull.log
+gitdiagram-pull.log
+gitingest-pull.log
+*.tmp.md
