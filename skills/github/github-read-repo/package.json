@@ -1,0 +1,22 @@
+{
+  "name": "github-read-repo",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Skill: pull GitHub repo docs/digests/diagrams (DeepWiki, Gitingest, GitDiagram) and read / edit them section-by-section.",
+  "scripts": {
+    "pull": "tsx scripts/deepwiki.com.ts",
+    "pull:deepwiki": "tsx scripts/deepwiki.com.ts",
+    "pull:gitingest": "tsx scripts/gitingest.com.ts",
+    "pull:gitdiagram": "tsx scripts/gitdiagram.com.ts",
+    "read": "tsx scripts/read.md.ts"
+  },
+  "dependencies": {
+    "md2ast": "^0.0.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  }
+}
