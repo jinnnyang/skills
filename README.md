@@ -21,6 +21,9 @@ skills/
 │   │   └── powershell-safe-invocation/  # PowerShell 安全调用规范（vendor 自 Misaka-Mikoto-Tech, MIT）
 │   ├── creative/
 │   │   └── human-signal/            # 去 AI 味写作（vendor 自 Doubao 桌面端技能，仅个人内部使用）
+│   ├── design/
+│   │   ├── doubao-visualization/    # 统一可视化（ECharts/HTML-SVG/原图叠加，vendor 自 Doubao，仅个人内部使用）
+│   │   └── html-page/               # 单页 HTML 开发 + 截图自检（vendor 自 Doubao，仅个人内部使用）
 │   └── meta/
 │       ├── skill-creator/           # 元技能：创建/测试/评估/优化其他技能（源自 anthropics/skills, Apache-2.0）
 │       ├── skill-creator-for-work/  # 字节版技能创建指南（vendor 自 Doubao 桌面端技能, Apache-2.0）
