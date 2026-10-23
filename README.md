@@ -9,14 +9,20 @@ skills/
 ├── .claude-plugin/marketplace.json  # Claude Code 插件市场注册表（由 scripts/gen_marketplace.py 生成）
 ├── skills/
 │   ├── documents/
-│   │   └── pptx/                    # PPTX 创建/编辑/分析（自研实现，schema 为 ECMA-376 官方文件）
+│   │   └── ...                      # Office/PDF 文件格式处理（docx、pptx 等）
+│   ├── engineering/                 # 软件工程工作流（vendor 自 mattpocock/skills, MIT）：grilling/to-spec/to-tickets/code-review/diagnosing-bugs/retro 等
+│   ├── github/
+│   │   └── ...                      # GitHub 工作流（gh CLI / git）
 │   ├── subagents/
-│   │   └── ...                      # 外部编码智能体委托（Codex/Claude Code/OpenCode/prime-agent）
+│   │   ├── ...                      # 外部编码智能体委托（Codex/Claude Code/OpenCode/prime-agent）
+│   │   ├── handoff/                 # 跨代理/跨 session handoff 文档导出（vendor 自 mattpocock/skills）
+│   │   └── claude-handoff/          # handoff 的 Claude Code 后台代理变体（vendor 自 mattpocock/skills）
 │   ├── terminal/
 │   │   ├── term-cli/                # 交互式终端会话控制（vendor 自 EliasOenal/term-cli, BSD-3-Clause-Clear）
 │   │   └── powershell-safe-invocation/  # PowerShell 安全调用规范（vendor 自 Misaka-Mikoto-Tech, MIT）
 │   └── meta/
-│       └── skill-creator/           # 元技能：创建/测试/评估/优化其他技能（源自 anthropics/skills, Apache-2.0）
+│       ├── skill-creator/           # 元技能：创建/测试/评估/优化其他技能（源自 anthropics/skills, Apache-2.0）
+│       └── writing-for-agents/      # 元技能：给 agent 写文档的方法论（vendor 自 mattpocock/skills, MIT）
 ├── spec/
 │   └── agent-skills-spec.md         # 规范指针（正文见 agentskills.io/specification）
 ├── template/
@@ -33,6 +39,8 @@ skills/
 - `documents/pptx`：自研 PPTX 技能（SKILL.md、脚本、校验器均为原创；XSD 来自 ECMA-376/W3C 官方发布，许可见其 SCHEMAS-LICENSE.md）。
 - `terminal/term-cli`：vendor 自 [EliasOenal/term-cli](https://github.com/EliasOenal/term-cli)（BSD-3-Clause-Clear），仅拷贝 SKILL.md + term-cli/term-assist 脚本 + LICENSE + install.sh；硬依赖 tmux，Windows 需 WSL/MSYS。见其 README.md。
 - `terminal/powershell-safe-invocation`：vendor 自 [Misaka-Mikoto-Tech/agent-skills](https://github.com/Misaka-Mikoto-Tech/agent-skills)（MIT），SKILL.md + reference.md 原样拷贝。
+- `engineering/*`（13 个）+ `subagents/handoff` + `subagents/claude-handoff` + `meta/writing-for-agents`：vendor 自 [mattpocock/skills](https://github.com/mattpocock/skills) v1.3.1（MIT）。分类调整：原 productivity/engineering/in-progress 三桶按本仓库语义收进 engineering/（工作流）、subagents/（跨代理接力）、meta/（元技能）。每个技能剔除 `agents/openai.yaml`，LICENSE 随目录保留，详见各自 README.md。
+- 未收编（对委派工作流价值低）：implement、implement-spec、tdd、ask-matt、teach、wizard、wait-what、writing-beats/fragments/shape、pr、research、improve-codebase-architecture、setup-matt-pocock-skills。
 - docx/pdf/xlsx 的 anthropic 原版技能为 source-available、不可再分发，存于本地参考目录（仓库外），后续按需自研替代。
 
 ## 添加一个新技能
