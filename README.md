@@ -19,8 +19,12 @@ skills/
 │   ├── terminal/
 │   │   ├── term-cli/                # 交互式终端会话控制（vendor 自 EliasOenal/term-cli, BSD-3-Clause-Clear）
 │   │   └── powershell-safe-invocation/  # PowerShell 安全调用规范（vendor 自 Misaka-Mikoto-Tech, MIT）
+│   ├── creative/
+│   │   └── human-signal/            # 去 AI 味写作（vendor 自 Doubao 桌面端技能，仅个人内部使用）
 │   └── meta/
 │       ├── skill-creator/           # 元技能：创建/测试/评估/优化其他技能（源自 anthropics/skills, Apache-2.0）
+│       ├── skill-creator-for-work/  # 字节版技能创建指南（vendor 自 Doubao 桌面端技能, Apache-2.0）
+│       ├── verifier-hub/            # 产物确定性校验 CLI（vendor 自 Doubao 桌面端技能，仅个人内部使用）
 │       └── writing-for-agents/      # 元技能：给 agent 写文档的方法论（vendor 自 mattpocock/skills, MIT）
 ├── spec/
 │   └── agent-skills-spec.md         # 规范指针（正文见 agentskills.io/specification）

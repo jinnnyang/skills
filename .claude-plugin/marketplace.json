@@ -15,6 +15,7 @@
       "source": "./",
       "strict": false,
       "skills": [
+        "skills/creative/human-signal",
         "skills/documents/docx",
         "skills/documents/ooxml-skill-authoring",
         "skills/documents/pptx",
@@ -39,6 +40,8 @@
         "skills/github/github-read-repo",
         "skills/github/github-repo-management",
         "skills/meta/skill-creator",
+        "skills/meta/skill-creator-for-work",
+        "skills/meta/verifier-hub",
         "skills/meta/writing-for-agents",
         "skills/subagents/claude-code",
         "skills/subagents/codex",
