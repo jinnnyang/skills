@@ -11,6 +11,7 @@ skills/
 │   ├── documents/
 │   │   └── ...                      # Office/PDF 文件格式处理（docx、pptx 等）
 │   ├── engineering/                 # 软件工程工作流（vendor 自 mattpocock/skills, MIT）：grilling/to-spec/to-tickets/code-review/diagnosing-bugs/retro 等
+│   │   └── codebase-inspection/     # pygount 代码量/语言占比统计（vendor 自 Hermes 内置技能, MIT）
 │   ├── github/
 │   │   └── ...                      # GitHub 工作流（gh CLI / git）
 │   ├── subagents/
@@ -22,7 +23,7 @@ skills/
 │   ├── creative/
 │   │   └── human-signal/            # 去 AI 味写作（vendor 自 Doubao 桌面端技能，仅个人内部使用）
 │   ├── design/
-│   │   ├── doubao-visualization/    # 统一可视化（ECharts/HTML-SVG/原图叠加，vendor 自 Doubao，仅个人内部使用）
+│   │   ├── visualization/           # 统一可视化（ECharts/HTML-SVG/原图叠加，vendor 自 Doubao，仅个人内部使用）
 │   │   └── html-page/               # 单页 HTML 开发 + 截图自检（vendor 自 Doubao，仅个人内部使用）
 │   └── meta/
 │       ├── skill-creator/           # 元技能：创建/测试/评估/优化其他技能（源自 anthropics/skills, Apache-2.0）

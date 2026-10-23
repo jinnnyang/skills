@@ -167,8 +167,8 @@ def main() -> int:
         front = frontmatter.group(1)
         name = re.search(r"^name:\s*(.+)$", front, re.M)
         description = re.search(r"^description:\s*(.+)$", front, re.M)
-        if not name or name.group(1).strip() != "doubao-visualization":
-            errors.append("frontmatter name 必须为 doubao-visualization")
+        if not name or name.group(1).strip() != "visualization":
+            errors.append("frontmatter name 必须为 visualization")
         if not description:
             errors.append("缺少 description")
         elif len(description.group(1).strip()) > 260:

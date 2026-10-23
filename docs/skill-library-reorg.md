@@ -81,19 +81,22 @@ flowchart TD
 - 二级目录（sub-category）非必须；单技能分类只挂一级。
 - 目录分类是"组织维度"，marketplace plugin 分组是"分发维度"——以目录分类为主，plugin 分组保持精简（暂时只保留 `core`），避免同一份技能在两边重复登记。
 
-### 5.3 分类定案（2026-10-15）
+### 5.3 分类定案（2026-10-15 定，2026-10-23 校准为实际 8 个 slug）
 
-对 anthropics/skills 全部 19 个技能归类后确定五个一级分类：
+对 anthropics/skills 全部 19 个技能归类后确定五个一级分类；实际落地时因 vendor 进来的技能超出原假设，扩展为八个 slug（原计划的 `writing` 从未建立，写作类技能落在 `creative/` 与 `meta/`）：
 
-| slug | 覆盖范围 | anthropics 示例 |
+| slug | 覆盖范围 | 当前成员示例 |
 |---|---|---|
-| `documents` | Office/PDF 等文件格式处理 | docx, pdf, pptx, xlsx（source-available，不可迁移，仅参考） |
-| `writing` | 文档写作、通讯、协作 | doc-coauthoring, internal-comms |
-| `design` | 前端、视觉、主题、生成艺术 | frontend-design, web-artifacts-builder, canvas-design, theme-factory, algorithmic-art, brand-guidelines |
-| `engineering` | 测试、构建、API 工程 | webapp-testing, mcp-builder, claude-api |
-| `meta` | 元技能：作用于 Agent 自身能力的技能（创建技能、委派任务、评估技能等） | skill-creator；自研新增：prime-agent（子代理委派） |
+| `documents` | Office/PDF 等文件格式处理 | docx, pptx, ooxml-skill-authoring |
+| `design` | 前端、视觉、图表、单页 HTML | visualization, html-page |
+| `creative` | 写作风格与创作 | human-signal |
+| `engineering` | 软件工程工作流、测试、度量 | code-review, triage, to-spec, wayfinder, codebase-inspection |
+| `github` | 仅 GitHub/git 相关工作流 | github-auth, github-pr-workflow, github-repo-management, github-read-repo |
+| `subagents` | 把任务委派给外部编码智能体或另一个 agent 实例 | claude-code, codex, opencode, prime-agent, handoff |
+| `terminal` | 终端/Shell 运行时 | term-cli, powershell-safe-invocation |
+| `meta` | 元技能：作用于 Agent 自身能力（创建技能、校验产物、给自己写文档、配置自身） | skill-creator, skill-creator-for-work, verifier-hub, writing-for-agents |
 
-不设 Claude 产品向分类（academy-guide / discernment-nudge / slack-gif-creator 不迁移）。目录分类名与 plugin 分组名共用同一套 slug。
+判定规则（补）：**按技能作用的对象分类，不按技能使用的工具分类**。`codebase-inspection` 用 pygount 度量代码库，作用于代码库 → `engineering`，即便它曾与 GitHub 技能放在一起。`hermes-agent` 作用于 agent 自身运行时 → 应归 `meta`；`subagents` 的语义是"把任务交出去"，不是"讲某个 agent"。该技能现留在 `subagents/` 等待改造（计划扩展为可委派另一个 Hermes 实例），改造完成后再迁移。
 
 ### 5.4 配套：自动生成 marketplace.json 的脚本
 

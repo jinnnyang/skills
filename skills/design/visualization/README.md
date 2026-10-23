@@ -7,7 +7,7 @@
 | Origin | Vendored from Doubao desktop agent workspace skills (`...\.doubao\agent_mode\workspace\.skills\doubao-visualization`) |
 | Author / License | ByteDance Doubao team / 未附许可；仅个人内部使用，不用于商业用途 |
 | Vendored scope | SKILL.md、references/（22 个文件）、examples/、schemas/、scripts/ 原样拷贝 |
-| Local modifications | frontmatter `name: doubao-visualization` → `visualization`；剔除 `agents/openai.yaml` |
+| Local modifications | frontmatter `name: doubao-visualization` → `visualization`（目录同步改名为 `skills/design/visualization/`，`scripts/validate_skill.py` 的 name 断言一并更新）；剔除 `agents/openai.yaml` |
 
 ## 平台独立性
 
