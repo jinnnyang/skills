@@ -43,6 +43,7 @@
         "skills/github/github-repo-management",
         "skills/meta/skill-creator",
         "skills/meta/skill-creator-for-work",
+        "skills/meta/skills-ecosystem",
         "skills/meta/verifier-hub",
         "skills/meta/writing-for-agents",
         "skills/subagents/claude-code",

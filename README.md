@@ -28,6 +28,7 @@ skills/
 │   └── meta/
 │       ├── skill-creator/           # 元技能：创建/测试/评估/优化其他技能（源自 anthropics/skills, Apache-2.0）
 │       ├── skill-creator-for-work/  # 字节版技能创建指南（vendor 自 Doubao 桌面端技能, Apache-2.0）
+│       ├── skills-ecosystem/        # 元技能：用 npx skills 管理技能生态（发现/安装/更新/移除，自研，参考 vercel-labs/skills docs, MIT）
 │       ├── verifier-hub/            # 产物确定性校验 CLI（vendor 自 Doubao 桌面端技能，仅个人内部使用）
 │       └── writing-for-agents/      # 元技能：给 agent 写文档的方法论（vendor 自 mattpocock/skills, MIT）
 ├── spec/
@@ -42,6 +43,7 @@ skills/
 
 ## 当前状态
 
+- `meta/skills-ecosystem`：自研。用 `npx skills` CLI（vercel-labs/skills, MIT）管理开放技能生态：发现（skills.sh + `find`）、安装（`add`、范围/symlink/锁文件）、`check`/`update`/`remove`/`use`，以及 `npx skills add jinnnyang/skills` 从本仓库直装（已实测）。
 - `meta/skill-creator`：源自 anthropics/skills（Apache-2.0），含 agents/、scripts/、eval-viewer/ 全管线。
 - `documents/pptx`：自研 PPTX 技能（SKILL.md、脚本、校验器均为原创；XSD 来自 ECMA-376/W3C 官方发布，许可见其 SCHEMAS-LICENSE.md）。
 - `terminal/term-cli`：vendor 自 [EliasOenal/term-cli](https://github.com/EliasOenal/term-cli)（BSD-3-Clause-Clear），仅拷贝 SKILL.md + term-cli/term-assist 脚本 + LICENSE + install.sh；硬依赖 tmux，Windows 需 WSL/MSYS。见其 README.md。
