@@ -14,6 +14,8 @@ skills/
 │   │   └── codebase-inspection/     # pygount 代码量/语言占比统计（vendor 自 Hermes 内置技能, MIT）
 │   ├── github/
 │   │   └── ...                      # GitHub 工作流（gh CLI / git）
+│   ├── knowledge/
+│   │   └── karpathy-llm-wiki/       # Karpathy 式个人 LLM 知识库（vendor 自 Astro-Han, MIT）
 │   ├── subagents/
 │   │   ├── ...                      # 外部编码智能体委托（Codex/Claude Code/OpenCode/prime-agent）
 │   │   └── handoff/                 # 跨代理/跨 session handoff 文档导出（vendor 自 mattpocock/skills；后台变体并入 claude-code 技能）
@@ -43,6 +45,7 @@ skills/
 
 ## 当前状态
 
+- `knowledge/karpathy-llm-wiki`：vendor 自 [Astro-Han/karpathy-llm-wiki](https://github.com/Astro-Han/karpathy-llm-wiki)（MIT，基线 `eafcc77`）。个人 LLM 知识库：raw/ 不可变材料 + wiki/ 编译文章，Ingest/Query/Lint 三操作，`scripts/check_evidence.py` 校验证据不变量（纯标准库，已冒烟测试）。只带 SKILL.md + references/ + scripts/，examples/tests/assets 未带入。
 - `meta/skills-ecosystem`：自研。用 `npx skills` CLI（vercel-labs/skills, MIT）管理开放技能生态：发现（skills.sh + `find`）、安装（`add`、范围/symlink/锁文件）、`check`/`update`/`remove`/`use`，以及 `npx skills add jinnnyang/skills` 从本仓库直装（已实测）。
 - `meta/skill-creator`：源自 anthropics/skills（Apache-2.0），含 agents/、scripts/、eval-viewer/ 全管线。
 - `documents/pptx`：自研 PPTX 技能（SKILL.md、脚本、校验器均为原创；XSD 来自 ECMA-376/W3C 官方发布，许可见其 SCHEMAS-LICENSE.md）。
